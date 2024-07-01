@@ -4,6 +4,8 @@ import NavItems from "./NavItems";
 import Cart from "./Cart";
 import Link from "next/link";
 import { buttonVariants } from "./ui/button";
+import Image from 'next/image'
+import logo from '../../public/logo.png'
 
 const Navbar = () => {
 
@@ -18,7 +20,8 @@ const Navbar = () => {
                             {/* TODO: mobile nav */}
                             <div className="ml-4 flex lg:ml-0">
                                 <Link href='/'>
-                                    <Icons.logo className="w-20" />
+                                    <Image src={logo} width={50} alt='logo'></Image>
+                                    {/* <Icons.logo className="w-20" /> */}
                                 </Link>
                             </div>
 

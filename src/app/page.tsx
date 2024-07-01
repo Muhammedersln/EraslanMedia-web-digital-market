@@ -27,7 +27,7 @@ export default function Home() {
     <>
       <MaxWidthWrapper >
         <div className="py-20 mx-auto text-center flex flex-col items-center max-w-3xl">
-          <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">Yüksek kalite için doğru yerdesiniz <span className="text-blue-600">Eraslan Medya</span>.
+          <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">Yüksek kalite için doğru yerdesiniz <span className="text-orange-600">Eraslan Medya</span>.
           </h1>
           <p className="mt-6 text-lg max-w-prose text-muted-foreground">
             Hoşgeldiniz. Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis, odit. Maiores, quaerat. Reiciendis, illo nam?
@@ -40,13 +40,13 @@ export default function Home() {
         </div>
         {/* TODO: products listesi */}
       </MaxWidthWrapper>
-      <section className="border-t border-gray-200 bg-gray-50">
+      <section className="border-t border-gray-200 bg-orange-50">
         <MaxWidthWrapper className="py-20">
           <div className="grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-3 lg:gap-x-8 lg:gap-y-0">
             {perks.map((perk) => (
               <div key={perk.name} className="md:flex  md:items-start md:text-left text-center lg:block lg:text-center">
                 <div className="md:flex-shrink-0 flex justify-center">
-                  <div className="h-16 w-16 flex items-center justify-center rounded-full bg-blue-100 text-blue-900">
+                  <div className="h-16 w-16 flex items-center justify-center rounded-full bg-orange-200 text-blue-900">
                     {<perk.Icon className="w-1/3 h-1/3"/>}
                   </div>
                 </div>

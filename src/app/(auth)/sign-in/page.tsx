@@ -14,43 +14,50 @@ import { z, ZodError } from 'zod'
 import { AuthCredentialsValidator, TAuthCredentialsValidator } from '@/lib/validators/account-credentials-validator'
 import { trpc } from '@/trpc/client'
 import { toast } from 'sonner'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
+
 
 const Page = () => {
 
+    const searchParams = useSearchParams()
+    const router = useRouter()
+    const isSeller = searchParams.get('as') === 'seller'
+    const origin = searchParams.get('origin')
 
 
     const { register, handleSubmit, formState: { errors } } = useForm<TAuthCredentialsValidator>({
         resolver: zodResolver(AuthCredentialsValidator),
     })
 
-    const router = useRouter()
 
-    const { mutate, isLoading } = trpc.auth.createPayloadUser.useMutation({
-        onError: (err) => {
-            if (err.data?.code === 'CONFLICT') {
-                toast.error('Bu e-posta adresi zaten kullanımda!')
 
+    const { mutate : signIn, isLoading } = trpc.auth.signIn.useMutation({
+        onSuccess: () => {
+            toast.success('Giriş başarılı')
+
+            if (origin) {
+                router.push(`/${origin}`)
                 return
             }
 
-            if (err instanceof ZodError) {
-                toast.error(err.issues[0].message)
+            if (isSeller) {
+                router.push('/sell')
                 return
             }
-            toast.error('Bir hata oluştu. Lütfen tekrar deneyin.')
+
+            router.push('/')
+            router.refresh()
         },
-
-        onSuccess: ({ sentToEmail }) => {
-            toast.success(`E-posta adresinize bir doğrulama e-postası gönderdik. ${sentToEmail}.`)
-            router.push('/verify-email?to=' + sentToEmail)
-
+        onError : (err) =>{
+            if(err.data?.code === 'UNAUTHORIZED'){
+                toast.error('Giriş bilgileri hatalı')
+            }
         }
     })
 
 
     const onSubmit = ({ email, password }: TAuthCredentialsValidator) => {
-        mutate({ email, password })
+        signIn({ email, password })
     }
 
     return (
@@ -61,14 +68,14 @@ const Page = () => {
                         <Image src={logo} width={100} alt='logo'></Image>
                         {/* <Icons.logo className="w-12 h-12" /> */}
                         <h1 className='text-2xl font-bold'>
-                            Hesap Oluştur
+                            Giriş Yap
                         </h1>
 
                         <Link className={buttonVariants({
                             variant: "link",
                             className: "text-muted-foreground text-orange-700 gap-1.5"
-                        })} href="/sign-in">
-                            Zaten bir hesabınız var mı? Giriş yapın
+                        })} href="/sign-up">
+                            Hesabınız yok mu? Kayıt olun
                             <ArrowRight className="w-4 h-4" />
                         </Link>
                     </div>
@@ -97,9 +104,19 @@ const Page = () => {
                                     {errors?.password && (<p className='text-red-500 text-sm'>{errors.password.message}</p>)}
                                 </div>
 
-                                <Button>Kayıt Ol</Button>
+                                <Button>Giriş Yap</Button>
                             </div>
                         </form>
+
+                        {/* <div className='relative'>
+                            <div aria-hidden="true" className='absolute inset-0 flex items-center'>
+                                <span className='w-full border-t'></span>
+                            </div>
+                            <div className='relative flex justify-center text-xs uppercase'>
+                                <span className='bg-background px-2 text-muted-foreground'>
+                                </span>
+                            </div>
+                        </div> */}
                     </div>
                 </div>
             </div>

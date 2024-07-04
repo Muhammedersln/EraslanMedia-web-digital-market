@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 export const AuthCredentialsValidator = z.object({
-    email: z.string().email(),
+    email: z.string().email({message: 'Geçerli eposta.'}),
     password: z.string().min(8, { message: 'Şifreniz en az 8 karakter olmalıdır.' })
 })
 

@@ -6,10 +6,14 @@ import Link from "next/link";
 import { buttonVariants } from "./ui/button";
 import Image from 'next/image'
 import logo from '../../public/logo.png'
+import { getSeverSideUser } from "@/lib/payload-utils";
+import { cookies } from "next/headers";
+import UserAccountNav from "./UserAccountNav";
 
-const Navbar = () => {
-
-    const user = null
+const Navbar = async () => {
+    const nextCookies = cookies()
+    const { user } = await getSeverSideUser(nextCookies)
+    
 
     return (
         <div className="bg-white sticky z-50 top-0 inset-x-0 h-16">
@@ -33,14 +37,17 @@ const Navbar = () => {
                                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
                                     {user ? null : (<Link href="/sign-in"
                                         className={buttonVariants({ variant: "ghost" })}
-                                    >Kayıt Ol
+                                    >Giriş Yap
                                     </Link>)}
 
                                     {user ? null : <span className="h-6 w-px bg-gray-200" aria-hidden="true" />}
 
-                                    {user ? <p></p> : (<Link href="/sign-up" className={buttonVariants({ variant: 'ghost' })}>
-                                        Hesap Oluştur
-                                    </Link>)}
+                                    {user ? (
+                                        <UserAccountNav user={user}/>
+                                    ) : (
+                                        <Link href="/sign-up" className={buttonVariants({ variant: 'ghost' })}>
+                                            Hesap Oluştur
+                                        </Link>)}
 
                                     {user ? (
                                         <span className="h-6 w-px bg-gray-200" aria-hidden="true" />) : null}

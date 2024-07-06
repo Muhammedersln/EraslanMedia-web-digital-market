@@ -2,7 +2,8 @@ import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import { buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { ArrowDownToLine, CheckCircle,Smile  } from "lucide-react";
+import { ArrowDownToLine, CheckCircle, Smile } from "lucide-react";
+import ProductReel from "@/components/ProductReel";
 
 const perks = [
   {
@@ -17,7 +18,7 @@ const perks = [
   },
   {
     name: 'Müşteri Memnuniyeti',
-    Icon: Smile ,
+    Icon: Smile,
     description: 'Müşterilermize 7-24 destek sağlıyoruz. Memnuniyet garantisi veriyoruz. Müşteri Memnuniyeti ilkemizdir.',
   }
 ];
@@ -39,6 +40,7 @@ export default function Home() {
 
         </div>
         {/* TODO: products listesi */}
+        <ProductReel query={{ sort: "desc", limit: 4 }} href="/products" title="Yeni" />
       </MaxWidthWrapper>
       <section className="border-t border-gray-200 bg-orange-50">
         <MaxWidthWrapper className="py-20">
@@ -47,7 +49,7 @@ export default function Home() {
               <div key={perk.name} className="md:flex  md:items-start md:text-left text-center lg:block lg:text-center">
                 <div className="md:flex-shrink-0 flex justify-center">
                   <div className="h-16 w-16 flex items-center justify-center rounded-full bg-orange-200 text-blue-900">
-                    {<perk.Icon className="w-1/3 h-1/3"/>}
+                    {<perk.Icon className="w-1/3 h-1/3" />}
                   </div>
                 </div>
                 <div className="mt-6 md:ml-4 md:mt-0 lg:ml-0 lg:mt-6">

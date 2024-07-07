@@ -48,7 +48,7 @@ export interface Product {
   name: string;
   description?: string | null;
   price: number;
-  category: 'ui-kits' | 'iccons';
+  category: 'instagram' | 'tiktok';
   product_files: string | ProductFile;
   approvedForSale?: ('pending' | 'approved' | 'denied') | null;
   priceId?: string | null;

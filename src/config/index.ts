@@ -1,41 +1,41 @@
 export const PRODUCT_CATEGORIES = [
     {
-        label: "UI Kits",
-        value: "ui-kits" as const,
+        label: "Instagram",
+        value: "instagram" as const,
         featured: [
             {
-                name: "Editor picks",
+                name: "Takipçi Satin Al",
                 href: "#",
                 imageSrc: "/nav/ui-kits/mixed.jpg",
             },
             {
-                name: "New Arrivals",
+                name: "Beğeni Satin Al",
                 href: "#",
                 imageSrc: "/nav/ui-kits/blue.jpg",
             },
             {
-                name: "Bestsellers",
+                name: "Reels İzlenme Satin Al",
                 href: "#",
                 imageSrc: "/nav/ui-kits/purple.jpg",
             }
         ]
     },
     {
-        label: "Icons",
-        value: "iccons" as const,
+        label: "Tiktok",
+        value: "tiktok" as const,
         featured: [
             {
-                name: "Favorite Icon Picks",
+                name: "Takipçi Satin Al",
                 href: "#",
                 imageSrc: "/nav/icons/picks.jpg",
             },
             {
-                name: "New Arrivals",
+                name: "Beğeni Satin Al",
                 href: "#",
                 imageSrc: "/nav/icons/new.jpg",
             },
             {
-                name: "Bestselling Icons",
+                name: "Reels İzlenme Satin Al",
                 href: "#",
                 imageSrc: "/nav/icons/bestsellers.jpg",
             }

@@ -1,7 +1,11 @@
 import MaxWidthWrapper from "@/components/MaxWidthWrapper"
+import { PRODUCT_CATEGORIES } from "@/config"
 import { getPayloadClient } from "@/get-payload"
+import { formatPrice } from "@/lib/utils"
+import { Check } from "lucide-react"
 import Link from "next/link"
 import { notFound } from "next/navigation"
+import Image from "next/image"
 
 interface PageProps {
     params: {
@@ -14,19 +18,19 @@ const BREADCRUMBS = [
     { id: 1, name: 'Home', href: '/' },
     { id: 2, name: 'Products', href: '/products' },
 ]
-const Page = async ({params}:PageProps) => {
+const Page = async ({ params }: PageProps) => {
 
-    const {productId} = params
+    const { productId } = params
     const payload = await getPayloadClient()
 
-    const {docs : products} = await payload.find({
+    const { docs: products } = await payload.find({
         collection: 'products',
         limit: 1,
-        where:{
-            id:{
+        where: {
+            id: {
                 equals: productId
             },
-            approvedForSale:{
+            approvedForSale: {
                 equals: "approved"
             }
         }
@@ -34,7 +38,11 @@ const Page = async ({params}:PageProps) => {
 
     const [product] = products
 
-    if(!product) return notFound()
+    if (!product) return notFound()
+    const label = PRODUCT_CATEGORIES.find(
+        ({ value }) => value === product.category
+    )?.label
+
 
     return (
         <MaxWidthWrapper className="bg-white">
@@ -65,8 +73,55 @@ const Page = async ({params}:PageProps) => {
                             ))}
                         </ol>
 
-                        <div className="mt-4">
-                            {/* <h1>{product.name}</h1> */}
+                        <div className='mt-4'>
+                            <h1 className='text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl'>
+                                {product.name as string}
+                            </h1>
+                        </div>
+
+
+                        <section className='mt-4'>
+                            <div className='flex items-center'>
+                                <p className='font-medium text-gray-900'>
+                                    {formatPrice(product.price as number)}
+                                </p>
+
+                                <div className='ml-4 border-l text-muted-foreground border-gray-300 pl-4'>
+                                    {label}
+                                </div>
+                            </div>
+
+                            <div className='mt-4 space-y-6'>
+                                <p className='text-base text-muted-foreground'>
+                                    {product.description as string}
+                                </p>
+                            </div>
+
+                            <div className='mt-6 flex items-center'>
+                                <Check
+                                    aria-hidden='true'
+                                    className='h-5 w-5 flex-shrink-0 text-green-500'
+                                />
+                                <p className='ml-2 text-sm text-muted-foreground'>
+                                    24 saat içerisinde teslimat
+                                </p>
+                            </div>
+                        </section>
+                    </div>
+
+                    {/* Ürün Resmi */}
+                    <div className='mt-10 lg:col-start-2 lg:row-span-2 lg:mt-0 lg:self-center'>
+                        <div className='aspect-square rounded-lg overflow-hidden'>
+                            {product.images.map((img: any, index: number) => (
+                                <div key={index} className='aspect-square rounded-lg overflow-hidden'>
+                                    <img
+                                        src={img.image.url}
+                                        alt={product.name as string}
+                                        className="object-cover w-full h-full"
+                                    />
+                                </div>
+                            ))}
+
                         </div>
                     </div>
                 </div>

@@ -5,7 +5,8 @@ const nextConfig = {
 		config.resolve.fallback = {
 		  fs: false,
 		  path: false,
-		  child_process: false
+		  child_process: false,
+		  // Diğer modüller
 		};
 	  } else {
 		// Webpack `externals` ayarını buraya ekleyin
@@ -14,6 +15,12 @@ const nextConfig = {
 		  'express': 'commonjs express'
 		};
 	  }
+  
+	  // picocolors modülü için ek ayar
+	  config.module.rules.push({
+		// test: /picocolors/,
+		use: 'null-loader'
+	  });
   
 	  return config;
 	},
@@ -25,6 +32,11 @@ const nextConfig = {
 		  hostname: "localhost",
 		},
 	  ],
+	},
+  
+	// Critters eklentisini buraya ekleyin
+	experimental: {
+	  optimizeCss: true, // CSS optimizasyonunu etkinleştirir
 	},
   };
   

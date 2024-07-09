@@ -2,10 +2,12 @@ import MaxWidthWrapper from "@/components/MaxWidthWrapper"
 import { PRODUCT_CATEGORIES } from "@/config"
 import { getPayloadClient } from "@/get-payload"
 import { formatPrice } from "@/lib/utils"
-import { Check } from "lucide-react"
+import { Check, Shield } from "lucide-react"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import Image from "next/image"
+import ProductReel from "@/components/ProductReel"
+import AddToCartButton from "@/components/AddToCartButton"
 
 interface PageProps {
     params: {
@@ -36,7 +38,7 @@ const Page = async ({ params }: PageProps) => {
         }
     })
 
-    const [product] = products
+    const [product] = products as any
 
     if (!product) return notFound()
     const label = PRODUCT_CATEGORIES.find(
@@ -124,8 +126,31 @@ const Page = async ({ params }: PageProps) => {
 
                         </div>
                     </div>
+
+                    {/* Ürün Kart */}
+                    <div className="mt-10 lg:col-start-1 lg:row-start-2 lg:max-w-lg lg:self-start">
+                        <div>
+                            <div className="mt-10">
+                                <AddToCartButton product={product} />
+                            </div>
+                            <div className="mt-6 text-center">
+                                <div className="group inline-flex text-sm text-medium">
+                                    <Shield aria-hidden="true" className="mr-2 h-5 w-5 flex-shrink-0 text-gray-400" />
+                                    <span className="text-muted-foreground hover:text-gray-700"> 365 gün garantili</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+
+            <ProductReel href="/products"
+                query={{ category: product.category, limit: 4 }}
+                title={`Benzer ${label}`}
+                // subtitle={`Browse similar high-quality ${label} just like '${product.name}'`}
+                subtitle={`Benzer yüksek kaliteli ${label} ürünlerine göz atın '${product.name}' gibi`}
+                
+            />
         </MaxWidthWrapper>
     )
 }

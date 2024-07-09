@@ -30,7 +30,7 @@ const ProductReel = (props: ProductReelProps) => {
     )
 
   const products = queryResults?.pages.flatMap(
-    (page) => page.items
+    (page) => page.items as any
   )
 
   let map: (Product | null)[] = []

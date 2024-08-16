@@ -85,7 +85,8 @@ const ImageSlider = ({ urls }: ImageSliderProps) => {
                 {urls.map((url, i) => (
                     <SwiperSlide key={i} className='-z-10 relative h-full w-full'>
                         <Image
-                            fill
+                            height={600}
+                            width={600}
                             loading='eager'
                             className='-z-10 h-full w-full object-cover object-center'
                             src={url}

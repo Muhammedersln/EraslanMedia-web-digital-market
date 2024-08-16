@@ -117,6 +117,8 @@ const Page = async ({ params }: PageProps) => {
                             {product.images.map((img: any, index: number) => (
                                 <div key={index} className='aspect-square rounded-lg overflow-hidden'>
                                     <Image
+                                        width={600}
+                                        height={600}
                                         src={img.image.url}
                                         alt={product.name as string}
                                         className="object-cover w-full h-full"
